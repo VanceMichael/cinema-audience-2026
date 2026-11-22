@@ -22,8 +22,7 @@ test('新厅闸机档先到但未封，不能替换另一影院的账台事实',
   const archives = await (await fetch(root + '/gates/archives?house=D&date=2')).json()
   assert.equal(archives[0].end, false)
   const compressed = Buffer.from(await (await fetch(root + archives[0].path)).arrayBuffer())
-  assert.equal(JSON.parse(gunzipSync(compressed).toString().split('
-')[0]).at, 1455)
+  assert.equal(JSON.parse(gunzipSync(compressed).toString().split('\n')[0]).at, 1455)
   assert.equal((await post(root, '/settlement/amend', { show: 'A', line: 'f1' })).status, 202)
   assert.equal((await post(root, '/settlement/amend', { show: 'B' })).status, 409)
   await post(root, '/lab?stage=other-house')
