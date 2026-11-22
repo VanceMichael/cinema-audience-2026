@@ -1,0 +1,133 @@
+{
+  "stages": {
+    "first-house": [
+      {
+        "path": "/gates/archives",
+        "body": [
+          {
+            "house": "C",
+            "room": "H",
+            "day": 1,
+            "range": [
+              1,
+              2
+            ],
+            "end": true,
+            "path": "/gates/old"
+          }
+        ],
+        "query": {
+          "house": "C",
+          "date": "1"
+        }
+      },
+      {
+        "path": "/settlement/lines",
+        "body": [
+          {
+            "house": "C",
+            "show": "A",
+            "period": "d1",
+            "line": "f1",
+            "state": "paid"
+          }
+        ]
+      }
+    ],
+    "late-exchange": [
+      {
+        "path": "/gates/archives",
+        "body": [
+          {
+            "house": "D",
+            "room": "H",
+            "day": 2,
+            "range": [
+              9,
+              10
+            ],
+            "end": false,
+            "path": "/gates/new"
+          }
+        ],
+        "query": {
+          "house": "D",
+          "date": "2"
+        }
+      },
+      {
+        "path": "/settlement/amend",
+        "body": {
+          "receipt": "c1",
+          "state": "received"
+        },
+        "method": "POST",
+        "payload": {
+          "show": "A",
+          "line": "f1"
+        },
+        "status": 202
+      },
+      {
+        "path": "/settlement/amend",
+        "body": {
+          "error": "接收影院尚未封尾"
+        },
+        "method": "POST",
+        "payload": {
+          "show": "B"
+        },
+        "status": 409
+      }
+    ],
+    "other-house": [
+      {
+        "path": "/gates/archives",
+        "body": [
+          {
+            "house": "D",
+            "room": "H",
+            "day": 2,
+            "range": [
+              9,
+              10
+            ],
+            "end": true,
+            "path": "/gates/new"
+          }
+        ],
+        "query": {
+          "house": "D",
+          "date": "2"
+        }
+      },
+      {
+        "path": "/settlement/receipts",
+        "body": [
+          {
+            "line": "f1",
+            "receipt": "c1",
+            "state": "confirmed"
+          },
+          {
+            "show": "B",
+            "line": "f4",
+            "state": "new"
+          }
+        ]
+      }
+    ]
+  },
+  "common": [
+    {
+      "path": "/gates/old",
+      "body": null,
+      "file": "cinema-c.gz"
+    },
+    {
+      "path": "/gates/new",
+      "body": null,
+      "file": "cinema-d.gz"
+    }
+  ]
+}
